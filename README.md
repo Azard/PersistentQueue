@@ -7,13 +7,6 @@
 
 # Usage
 
-Require authority
-
-``` XML
-<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-<uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
-```
-
 ``` Java
 Queue<SomeClass> queue = new PersistentQueue<>(context, "fileName");
 queue.add(someObject);
