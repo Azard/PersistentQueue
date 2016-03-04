@@ -1,6 +1,7 @@
 package me.azard.android.util;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,14 +16,11 @@ import java.util.LinkedList;
 
 public class PersistentQueue<E> extends AbstractQueue<E> {
 
-    private final File fileDir;
-    private final String fileName;
     private File file;
     private LinkedList<E> list;
 
     public PersistentQueue(File fileDir, String fileName) {
-        this.fileDir = fileDir;
-        this.fileName = fileName;
+        file = new File(fileDir, fileName);
         try {
             if (!read()) {
                 create();
@@ -32,9 +30,8 @@ public class PersistentQueue<E> extends AbstractQueue<E> {
         }
     }
 
-    public PersistentQueue(Context contex, String fileName) {
-        this.fileDir = contex.getFilesDir();
-        this.fileName = fileName;
+    public PersistentQueue(Context context, String fileName) {
+        file = new File(context.getFilesDir(), fileName);
         try {
             if (!read()) {
                 create();
@@ -107,7 +104,6 @@ public class PersistentQueue<E> extends AbstractQueue<E> {
 
     private void create() throws IOException {
         list = new LinkedList<>();
-        file = new File(fileDir, fileName);
         if (!file.createNewFile()) {
             throw new IOException("Unable create new file");
         }
